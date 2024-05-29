@@ -1,14 +1,15 @@
 terraform {
-  cloud {
+  // Uncomment if you use HCP
+  /*cloud {
     workspaces {
       name = "learn-terraform-for-each"
     }
-  }
+  }*/
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.22.0"
+      version = "~> 5.30.0"
     }
   }
 

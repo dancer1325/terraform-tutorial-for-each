@@ -4,36 +4,6 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-variable "project_name" {
-  description = "Name of the project. Used in resource names and tags."
-  type        = string
-  default     = "client-webapp"
-}
-
-variable "environment" {
-  description = "Value of the 'Environment' tag."
-  type        = string
-  default     = "dev"
-}
-
-variable "public_subnets_per_vpc" {
-  description = "Number of public subnets. Maximum of 16."
-  type        = number
-  default     = 2
-}
-
-variable "private_subnets_per_vpc" {
-  description = "Number of private subnets. Maximum of 16."
-  type        = number
-  default     = 2
-}
-
-variable "instance_type" {
-  description = "Type of EC2 instance to use."
-  type        = string
-  default     = "t2.micro"
-}
-
 variable "vpc_cidr_block" {
   description = "CIDR block for VPC."
   type        = string
@@ -85,3 +55,58 @@ variable "private_subnet_cidr_blocks" {
     "10.0.116.0/24"
   ]
 }
+
+// 1. Configuring 1! case
+/*variable "project_name" {
+  description = "Name of the project. Used in resource names and tags."
+  type        = string
+  default     = "client-webapp"
+}
+
+variable "environment" {
+  description = "Value of the 'Environment' tag."
+  type        = string
+  default     = "dev"
+}
+
+variable "public_subnets_per_vpc" {
+  description = "Number of public subnets. Maximum of 16."
+  type        = number
+  default     = 2
+}
+
+variable "private_subnets_per_vpc" {
+  description = "Number of private subnets. Maximum of 16."
+  type        = number
+  default     = 2
+}
+
+variable "instance_type" {
+  description = "Type of EC2 instance to use."
+  type        = string
+  default     = "t2.micro"
+}*/
+
+// 2. Configuring several similars
+variable "project" {
+  description = "Map of project names to configuration."
+  type        = map(any)
+
+  default = {
+    client-webapp = {
+      public_subnets_per_vpc  = 2,
+      private_subnets_per_vpc = 2,
+      instances_per_subnet    = 2,
+      instance_type           = "t2.micro",
+      environment             = "dev"
+    },
+    internal-webapp = {
+      public_subnets_per_vpc  = 1,
+      private_subnets_per_vpc = 1,
+      instances_per_subnet    = 2,
+      instance_type           = "t2.nano",
+      environment             = "test"
+    }
+  }
+}
+
